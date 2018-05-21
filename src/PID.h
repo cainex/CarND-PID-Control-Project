@@ -13,9 +13,28 @@ public:
   /*
   * Coefficients
   */ 
-  double Kp;
-  double Ki;
-  double Kd;
+  const int p=0;
+  const int i=1;
+  const int d=2;
+  double K[3];
+
+  /*
+  * Twiddle factors
+  */
+  double dK[3];
+  double twiddleThreshold;
+  bool   enableTwiddle;
+  int    twiddleStep;
+  int    twiddleInterval;
+  double twiddleBestError;
+  double twiddleTotalError;
+
+  typedef enum {twiddleAdd, 
+                twiddleSubtract, 
+                twiddleAdjust} TwiddleState;
+  TwiddleState twiddleState;
+
+  int twiddleParam;
 
   /*
   * Constructor

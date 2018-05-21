@@ -2,6 +2,28 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+## Discussion Points
+
+### Final run video
+[Final Lap Video](./final_lap.mp4)
+
+### Describe the effects of the PID Components
+* P - Proportional Component
+  * The proportional component causes the car to steer towards the desired path proportional to the difference between the cars current position and the desired position (cross-track error). The amount of counter-steering that occurs is governed by the Kp hyperparameter. 
+  * Removing this term causes the PID controller to not course correct
+  * Setting this term to be too large causes large oscillations as the car over-corrects 
+* I - Integral Component
+  * The integral component is used to correct for systemic bias which would cause the car to not be able to reach the desired center. 
+  * Removing this term exhibits little difference as there is no observable systemic bias in the simulation.
+  * Setting this term to be large causes the car to exhibit massive oversteer, ultimately resulting in the car driving in a circle.
+* D - Differential Component
+  * The differential component is used to dampen the oscillations that can occur from the proportional component. With this term present and with an optimal hyper-parameter, the car will have a smooth correction to the center with minimal oscillation.
+  * Removing this term causes the car to oscillate around the center.
+  * Setting this term too high causes the car to make very sharp corrections.
+
+
+### Hyper-parameters
+Choosing the most effective hyper-parameters was a two step process. I began by hand-selecting hyper-parameters that were good enough to get the car to at least get around the track without going off-course in an unrecoverable way. At that point, I implemented the coordinate descent or 'twiddle' algorithm. The one small difference was that the simulation was not reset for each hyper-parameter trial run. Instead the hyper-parameters where adjust mid-course. The number of samples before each step of the 'twiddle' algorithm was set in such a way that the car made a complete run around the track for each step. The hyper-parameters where tuned until the sum of all of the modifiers (dKp, dKi and dKd) summed to < 0.00001. The inital values of [dKp, dKi, dKd] = [0.005, 0.00002, 0.01]. This was implemented in the PID::UpdateError() method. The final values for [Kp, Ki, Kd] = [0.252708, 0.00381078, 3.82755].
 
 ## Dependencies
 
